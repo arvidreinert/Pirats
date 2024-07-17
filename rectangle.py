@@ -11,7 +11,7 @@ class Rectangle():
         if not image:
             self.rect = pygame.Surface(size)
             self.rect.fill(self.color)
-            self.position = self.position[0] - self.size[0] / 2, self.position[1] - self.size[1] / 2
+            self.position = self.position[0]-self.size[0]/2, self.position[1]-self.size[1]/2
             self.rect_rect = self.rect.get_rect()
             self.rect_rect.center = position
         else:
