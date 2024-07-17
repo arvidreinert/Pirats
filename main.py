@@ -8,8 +8,8 @@ class game():
         self.joysticks = []
         self.tutorial_view = Rectangle((230,100),(150,height-150),(0,0,0),"freeroam_controls.png")
         self.background = Rectangle((width,height),(width/2,height/2),(0,0,0),"ocean1.png")
-        self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
-        self.boat.set_rotation(0)
+        self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"menu.jpg")
+        self.rot = 0
 
     def play_game(self):
         while self.player_caught == False:
@@ -36,15 +36,13 @@ class game():
             # here the controller input is used:
             if len(self.joysticks) >= 1:
                 if self.joysticks[0].get_button(3) == 1:
-                    pass
+                    print("rotate")
+                    self.rot += 1
+                    if self.rot >= 360:
+                        self.rot = 0
                 else:
-                    print(math.atan2(y1-y0,x1-x0)-(math.pi/2))
-                    stick_x = self.joysticks[0].get_axis(0)
-                    stick_y = self.joysticks[0].get_axis(1)
-                    x0,y0 = 0.00390625,0.00390625
-                    print(math.atan2(stick_y-y0,stick_x-x0)-(math.pi/2))
-                    #self.boat.set_rotation(math.atan2(y1-y0,x1-x0)-(math.pi/2))
-
+                    pass
+            self.boat.set_rotation(0.1)
             screen.fill((0,0,0))
             self.background.update()
             self.tutorial_view.update()
