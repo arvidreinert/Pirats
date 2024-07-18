@@ -17,7 +17,6 @@ class game():
             #here is the controller manager can also be used by multiple controlers
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    self.joysticks[0].stop_rumble()
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
