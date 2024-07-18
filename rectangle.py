@@ -49,11 +49,9 @@ class Rectangle():
     
     def change_position(self, xc, yc):
         if self.image == False:
-            self.rect_rect.centerx += xc
-            self.rect_rect.centery += yc 
+            self.rect_rect.center = self.rect_rect.center[0]+xc,self.rect_rect.center[1]+yc
         else:
-            self.image_rect.centerx += xc
-            self.image_rect.centery += yc
+           self.image_rect.center = self.image_rect.center[0]+xc,self.image_rect.center[1]+yc
 
     def kill(self):
         self.is_updating = False

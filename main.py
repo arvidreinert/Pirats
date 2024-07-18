@@ -8,26 +8,36 @@ class game():
         self.tutorial_view = Rectangle((230,100),(150,height-150),(0,0,0),"freeroam_controls.png")
         self.background = Rectangle((width,height),(width/2,height/2),(0,0,0),"ocean1.png")
         self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
+        self.water_shower = Rectangle((100,100),(300,height-150),(0,0,0),"water-floe.png")
         self.rot = 0
         self.speed_multiplikator = 1
-        self.boat_move = [0.1,0]
+        self.water_flow = (round(random.uniform(-1,1),1),round(random.uniform(-1,1),1))
+        x0,y0 = 0,0
+        x1,y1 = self.water_flow[0]*1000,self.water_flow[1]*1000
+        self.boat.set_rotation(math.atan2(y1-y0,x1-x0)-(math.pi/2)+90)
+        self.water_shower.set_rotation(math.atan2(y1-y0,x1-x0)-(math.pi/2))
+        print(self.water_flow)
+        self.boat_move = list(self.water_flow)
 
     def play_game(self):
         while self.player_caught == False:
-            #here is the controller manager can also be used by multiple controlers
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         self.speed_multiplikator += 0.1
-            print(self.boat.get_pos())
-            self.boat.change_position(self.boat_move[0]*self.speed_multiplikator,self.boat_move[1]*self.speed_multiplikator)
-            print(self.boat.get_pos())
+
+            x = self.boat.get_pos()[0]
+            y = self.boat.get_pos()[1]
+            self.boat.change_position(self.boat_move[0]*self.speed_multiplikator-self.water_flow[0],self.boat_move[1]*self.speed_multiplikator-self.water_flow[1])
+            print(self.boat_move[0]*self.speed_multiplikator+self.water_flow[0],self.boat_move[1]*self.speed_multiplikator+self.water_flow[1])
+            print(self.boat.get_pos()[0]-x,self.boat.get_pos()[1]-y)
             screen.fill((0,0,0))
             self.background.update()
             self.tutorial_view.update()
             self.boat.update()
+            self.water_shower.update()
             pygame.display.update()
 
 #main menu:
@@ -56,6 +66,7 @@ while running == True:
         background.update()
         play_button.update()
         pygame.display.update()
+
 print(running)
 if running == "play":
     ga = game()
