@@ -31,27 +31,21 @@ class Rectangle():
             col = tuple(col)
             surface.set_alpha(self.transparency)
             if self.image != False:
+                self.image_rect.center = self.position
                 surface.blit(self.image, (self.image_rect.x,self.image_rect.y))
             else:
+                self.rect_rect.center = self.position
                 surface.blit(self.rect, (self.rect_rect.x,self.rect_rect.y))
             screen.blit(surface, (0, 0))
 
     def set_transparency(self, transparency):
         self.transparency = transparency
+
     def set_position(self,xc,yc):
-        print(xc,yc)
-        if self.image == False:
-            self.rect_rect.centerx = xc
-            self.rect_rect.centery = yc
-        else:
-            self.image_rect.centerx = xc
-            self.image_rect.centery = yc
-    
+        self.position = xc, yc
+
     def change_position(self, xc, yc):
-        if self.image == False:
-            self.rect_rect.center = self.rect_rect.center[0]+xc,self.rect_rect.center[1]+yc
-        else:
-           self.image_rect.center = self.image_rect.center[0]+xc,self.image_rect.center[1]+yc
+        self.position = self.position[0]+xc,self.position[1]+yc
 
     def kill(self):
         self.is_updating = False
@@ -63,12 +57,18 @@ class Rectangle():
         else:
            self.image = pygame.transform.rotate(self.image, rot)
            self.image_rect = self.image.get_rect(center = self.image_rect.center)
-    
+
+    def update_hitbox(self):
+        if self.image == False:
+            self.rect_rect.center = self.position
+        else:
+            self.image_rect.center = self.position
+
     def get_pos(self):
         if self.image == False:
-            return self.rect_rect.center
+            return self.position
         else:
-            return self.image_rect.center
+            return self.position
 
     def get_point_colide(self,point):
         if self.image != False:

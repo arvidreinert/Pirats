@@ -10,14 +10,9 @@ class game():
         self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
         self.water_shower = Rectangle((100,100),(300,height-150),(0,0,0),"water-floe.png")
         self.rot = 0
-        self.speed_multiplikator = 0.5
-        self.water_flow = (round(random.uniform(-1,1),1),round(random.uniform(-1,1),1))
-        x0,y0 = 0,0
-        x1,y1 = self.water_flow[0]*1000,self.water_flow[1]*1000
-        self.boat.set_rotation(math.atan2(y1-y0,x1-x0)-(math.pi/2)+90)
-        self.water_shower.set_rotation(math.atan2(y1-y0,x1-x0)-(math.pi/2))
-        print(self.water_flow)
-        self.boat_move = list(self.water_flow)
+        self.boat_speed = (0,90)
+        self.water_flow = (random.uniform(-1.5,1.5),random.randint(5,360))
+        self.water_shower.set_rotation(self.water_flow[1])
 
     def play_game(self):
         while self.player_caught == False:
@@ -26,13 +21,16 @@ class game():
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                        self.speed_multiplikator += 0.1
+                        self.boat_speed[0] += 0.5 
 
-            x = self.boat.get_pos()[0]
-            y = self.boat.get_pos()[1]
-            self.boat.change_position(self.boat_move[0]*self.speed_multiplikator+self.water_flow[0],self.boat_move[1]*self.speed_multiplikator+self.water_flow[1])
-            print(self.boat_move[0]*self.speed_multiplikator+self.water_flow[0],self.boat_move[1]*self.speed_multiplikator+self.water_flow[1])
-            print(self.boat.get_pos()[0]-x,self.boat.get_pos()[1]-y)
+            x = self.boat_speed[1]*math.cos(self.boat_speed[1]/180*math.pi)
+            y = self.boat_speed[1]*math.sin(self.boat_speed[1]/180*math.pi)
+            x1= self.water_flow[1]*math.cos(self.water_flow[1]/180*math.pi)
+            y1 = self.boat_speed[1]*math.sin(self.boat_speed[1]/180*math.pi)
+            self.boat.change_position(x+x1,y+y1)
+            self.boat.set_rotation(self.boat_speed[1])
+            self.boat.update_hitbox()
+
             screen.fill((0,0,0))
             self.background.update()
             self.tutorial_view.update()
