@@ -29,8 +29,7 @@ class game():
             y1 = self.boat_speed[1]*math.sin(self.boat_speed[1]/180*math.pi)
             self.boat.change_position(x+x1,y+y1)
             self.boat.set_rotation(self.boat_speed[1])
-            self.boat.update_hitbox()
-
+    
             screen.fill((0,0,0))
             self.background.update()
             self.tutorial_view.update()
@@ -39,7 +38,7 @@ class game():
             pygame.display.update()
 
 #main menu:
-play_button = Rectangle((width/2,height/4),(width/2,height/2-height/5.5),(255,255,255),"play.png")
+play_button = Rectangle((width/2,height/4),(width/2,height/2),(255,255,255),"play.png")
 background = Rectangle((width,height),(width/2,height/2),(255,255,255), "menu.jpg")
 running = True
 
@@ -60,6 +59,7 @@ while running == True:
                 print("click")
                 screen.fill((0,0,0))
                 running = "play"
+
     if running == True:
         background.update()
         play_button.update()

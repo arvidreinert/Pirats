@@ -11,15 +11,17 @@ class Rectangle():
         if not image:
             self.rect = pygame.Surface(size)
             self.rect.fill(self.color)
-            self.position = self.position[0]-self.size[0]/2, self.position[1]-self.size[1]/2
+            self.position = position
             self.rect_rect = self.rect.get_rect()
-            self.rect_rect.center = position
+            #self.rect_rect.center = self.position[0] - self.size[0] / 2, self.position[1] - self.size[1] / 2
+            self.position = self.rect_rect.center
         else:
-            self.position = self.position[0] - self.size[0] / 2, self.position[1] - self.size[1] / 2
+            self.position = position
             self.image = pygame.image.load(image).convert_alpha()
             self.image = pygame.transform.scale(self.image, size)
             self.image_rect = self.image.get_rect()
-            self.image_rect.center = position
+            self.image_rect.center = self.position[0]-self.size[0],self.position[1]-self.size[1]
+            self.position = self.image_rect.center
         
 
     def update(self):
@@ -32,10 +34,11 @@ class Rectangle():
             surface.set_alpha(self.transparency)
             if self.image != False:
                 self.image_rect.center = self.position
-                surface.blit(self.image, (self.image_rect.x,self.image_rect.y))
+                surface.blit(self.image, self.image_rect.center)
             else:
                 self.rect_rect.center = self.position
-                surface.blit(self.rect, (self.rect_rect.x,self.rect_rect.y))
+                #self.position[0]-self.size[0], self.position[1]-self.size[1]
+                surface.blit(self.rect, self.image_rect.center)
             screen.blit(surface, (0, 0))
 
     def set_transparency(self, transparency):
@@ -43,9 +46,11 @@ class Rectangle():
 
     def set_position(self,xc,yc):
         self.position = xc, yc
+        self.update()
 
     def change_position(self, xc, yc):
         self.position = self.position[0]+xc,self.position[1]+yc
+        self.update()
 
     def kill(self):
         self.is_updating = False
@@ -57,12 +62,6 @@ class Rectangle():
         else:
            self.image = pygame.transform.rotate(self.image, rot)
            self.image_rect = self.image.get_rect(center = self.image_rect.center)
-
-    def update_hitbox(self):
-        if self.image == False:
-            self.rect_rect.center = self.position
-        else:
-            self.image_rect.center = self.position
 
     def get_pos(self):
         if self.image == False:
