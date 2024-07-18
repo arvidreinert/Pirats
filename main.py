@@ -5,44 +5,26 @@ class game():
     def __init__(self):
         self.score = 0
         self.player_caught = False
-        self.joysticks = []
         self.tutorial_view = Rectangle((230,100),(150,height-150),(0,0,0),"freeroam_controls.png")
         self.background = Rectangle((width,height),(width/2,height/2),(0,0,0),"ocean1.png")
-        self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"menu.jpg")
+        self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
         self.rot = 0
+        self.speed_multiplikator = 1
+        self.boat_move = [0.1,0]
 
     def play_game(self):
         while self.player_caught == False:
             #here is the controller manager can also be used by multiple controlers
-            if pygame.joystick.get_count() >= 1 and self.joysticks == []:
-                joy = pygame.joystick.Joystick(0)
-                joy = (joy,joy.get_name())
-                #call with [0]
-
-                if len(self.joysticks) <= 1 and joy not in self.joysticks:
-                    joy = pygame.joystick.Joystick(0)
-                    joy.init()
-                    print("test")
-                    print(joy.rumble(1,1,160))
-                    #feels like a litle punch:joy.rumble(1,1,8)
-                    self.joysticks.append(joy)
             for event in pygame.event.get():
-                if event.type == pygame.JOYDEVICEREMOVED:
-                    del self.joysticks[0]
-                elif event.type == pygame.QUIT:
+                if event.type == pygame.QUIT:
                     self.joysticks[0].stop_rumble()
                     sys.exit()
-
-            # here the controller input is used:
-            if len(self.joysticks) >= 1:
-                if self.joysticks[0].get_button(3) == 1:
-                    print("rotate")
-                    self.rot += 1
-                    if self.rot >= 360:
-                        self.rot = 0
-                else:
-                    pass
-            self.boat.set_rotation(0.1)
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        self.speed_multiplikator += 0.1
+            print(self.boat.get_pos())
+            self.boat.change_position(self.boat_move[0]*self.speed_multiplikator,self.boat_move[1]*self.speed_multiplikator)
+            print(self.boat.get_pos())
             screen.fill((0,0,0))
             self.background.update()
             self.tutorial_view.update()
