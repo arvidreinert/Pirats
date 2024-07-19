@@ -13,7 +13,7 @@ class game():
         self.water_flow = (random.uniform(-1.5,1.5),random.randint(5,360))
         #self.water_shower.set_rotation(self.water_flow[1])
         #-self.boat_speed[1]
-        self.boat_speed = (0.5,self.water_flow[1])
+        self.boat_speed = (0.1,self.water_flow[1])
         self.water_shower.set_rotation(-90-self.water_flow[1])
         print(self.boat_speed)
         self.boat.set_rotation(-self.boat_speed[1])
@@ -25,7 +25,12 @@ class game():
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                        self.boat_speed == self.boat_speed[0]+0.5,self.boat_speed[1]+0.5
+                        self.boat_speed = self.boat_speed[0]+0.1,self.boat_speed[1]
+                    if event.key == pygame.K_LEFT:
+                        self.boat_speed = self.boat_speed[0],self.boat_speed[1]+1
+                    if event.key == pygame.K_RIGHT:
+                        self.boat_speed = self.boat_speed[0],self.boat_speed[1]-1
+
             z = self.boat_speed[1]/180*math.pi
             #boat speed[0] = Speed boat speed[1] = rotatiomn
             x = self.boat_speed[0]*math.cos(z)
