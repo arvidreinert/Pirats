@@ -13,7 +13,7 @@ class game():
         self.water_flow = (random.uniform(-1.5,1.5),random.randint(5,360))
         #self.water_shower.set_rotation(self.water_flow[1])
         #-self.boat_speed[1]
-        self.boat_speed = (0,0)
+        self.boat_speed = (0.5,self.water_flow[1])
         self.water_shower.set_rotation(-90-self.water_flow[1])
         print(self.boat_speed)
         self.boat.set_rotation(-self.boat_speed[1])
@@ -31,9 +31,9 @@ class game():
             x = self.boat_speed[0]*math.cos(z)
             y = self.boat_speed[0]*math.sin(z)
             x1= self.water_flow[0]*math.cos(z)
-            y1 = self.boat_speed[0]*math.sin(z)
+            y1 = self.water_flow[0]*math.sin(z)
             #print(y,y1,x,x1)
-            self.boat.change_position(x+x1,y+y1)
+            self.boat.change_position(x,y)
     
             screen.fill((0,0,0))
             self.background.update(screen)
