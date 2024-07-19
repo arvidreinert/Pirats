@@ -47,7 +47,7 @@ class Rectangle():
     def kill(self):
         self.is_updating = False
 
-    def set_rotation(self, rot):
+    def change_rotation(self, rot):
         if self.image_path is not None:
             self.image = pygame.transform.rotate(self.image, rot)
             self.image_rect = self.image.get_rect(center=self.position)
