@@ -25,11 +25,9 @@ class Rectangle():
     def update(self, surface):
         if self.is_updating:
             if self.image_path is not None:
-                self.image_rect.center = self.position
-                surface.blit(self.image, self.image_rect)
+                surface.blit(self.image, self.image.get_rect(center=self.position))
             else:
-                self.rect_rect.center = self.position
-                surface.blit(self.rect, self.rect_rect)
+                surface.blit(self.rect, self.rect.get_rect(center=self.position))
         
     def set_transparency(self, transparency):
         self.transparency = transparency
@@ -49,23 +47,23 @@ class Rectangle():
 
     def change_rotation(self, rot):
         if self.image_path is not None:
-            self.image = pygame.transform.rotate(self.image, rot)
-            self.image_rect = self.image.get_rect(center=self.position)
+            rotated_image = pygame.transform.rotate(self.image,rot)
+            self.image = rotated_image
         else:
-            self.rect = pygame.transform.rotate(self.rect, rot)
-            self.rect_rect = self.rect.get_rect(center=self.position)
+            rotated_image = pygame.transform.rotate(self.image,rot)
+            self.image = rotated_image
 
     def get_pos(self):
         return self.position
 
     def get_point_collide(self, point):
         if self.image_path is not None:
-            return self.image_rect.collidepoint(point)
+            return self.image.get_rect(center=self.position).collidepoint(point)
         else:
-            return self.rect_rect.collidepoint(point)
+            return self.rect.get_rect(center=self.position).collidepoint(point)
         
     def get_colliding_with(self, colrect):
         if self.image_path is not None:
-            return self.image_rect.colliderect(colrect.image_rect if colrect.image_path is not None else colrect.rect_rect)
+            return self.image.get_rect(center=self.position).colliderect(colrect.self.image.get_rect(center=self.position) if colrect.image_path is not None else colrect.self.rect.get_rect(center=self.position))
         else:
-            return self.rect_rect.colliderect(colrect.rect_rect if colrect.image_path is None else colrect.image_rect)
+            return self.rect.get_rect(self.position).colliderect(colrect.self.rect.get_rect(center=self.position) if colrect.image_path is None else colrect.self.image.get_rect(center=self.position))

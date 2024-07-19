@@ -29,10 +29,10 @@ class game():
                         self.boat_speed = self.boat_speed[0]+0.1,self.boat_speed[1]
                     if event.key == pygame.K_LEFT:
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]-1
-                        self.boat.change_rotation(-1)
+                        self.boat.change_rotation(1)
                     if event.key == pygame.K_RIGHT:
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]+1
-                        self.boat.change_rotation(1)
+                        self.boat.change_rotation(-1)
                     if event.key == pygame.K_DOWN:
                         self.boat_speed = self.boat_speed[0]-0.1,self.boat_speed[1]
 
