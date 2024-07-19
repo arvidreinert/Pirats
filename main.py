@@ -10,9 +10,13 @@ class game():
         self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
         self.water_shower = Rectangle((100,100),(300,height-150),(0,0,0),"water-floe.png")
         self.rot = 0
-        self.boat_speed = (0,90)
         self.water_flow = (random.uniform(-1.5,1.5),random.randint(5,360))
-        self.water_shower.set_rotation(self.water_flow[1])
+        #self.water_shower.set_rotation(self.water_flow[1])
+        #-self.boat_speed[1]
+        self.boat_speed = (0,0)
+        self.water_shower.set_rotation(-90-self.water_flow[1])
+        print(self.boat_speed)
+        self.boat.set_rotation(-self.boat_speed[1])
 
     def play_game(self):
         while self.player_caught == False:
@@ -21,14 +25,15 @@ class game():
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                        self.boat_speed[0] += 0.5 
-
-            x = self.boat_speed[1]*math.cos(self.boat_speed[1]/180*math.pi)
-            y = self.boat_speed[1]*math.sin(self.boat_speed[1]/180*math.pi)
-            x1= self.water_flow[1]*math.cos(self.water_flow[1]/180*math.pi)
-            y1 = self.boat_speed[1]*math.sin(self.boat_speed[1]/180*math.pi)
+                        self.boat_speed == self.boat_speed[0]+0.5,self.boat_speed[1]+0.5
+            z = self.boat_speed[1]/180*math.pi
+            #boat speed[0] = Speed boat speed[1] = rotatiomn
+            x = self.boat_speed[0]*math.cos(z)
+            y = self.boat_speed[0]*math.sin(z)
+            x1= self.water_flow[0]*math.cos(z)
+            y1 = self.boat_speed[0]*math.sin(z)
+            #print(y,y1,x,x1)
             self.boat.change_position(x+x1,y+y1)
-            self.boat.set_rotation(self.boat_speed[1])
     
             screen.fill((0,0,0))
             self.background.update(screen)
