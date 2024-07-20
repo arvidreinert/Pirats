@@ -15,11 +15,11 @@ class game():
         self.background = Rectangle((width*3,height*3),(width/2,height/2),(0,0,0),"ocean1.png")
         self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
         self.rot = 0
-        self.water_flow = (random.uniform(-0.3,0.3),random.randint(5,360))
+        self.water_flow = (random.uniform(-0.7,0.7),random.randint(5,360))
         self.water_shower = Rectangle((100,100*(self.water_flow[0]+1)),(300,height-150),(0,0,0),"water-floe.png")
         #self.water_shower.set_rotation(self.water_flow[1])
         #-self.boat_speed[1]
-        self.boat_speed = (0.1,self.water_flow[1])
+        self.boat_speed = (0,self.water_flow[1])
         self.water_shower.change_rotation(-90-self.water_flow[1])
         print(self.boat_speed)
         self.boat.change_rotation(-self.boat_speed[1])
