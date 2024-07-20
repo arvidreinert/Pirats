@@ -11,6 +11,9 @@ class game():
         self.player_caught = False
         self.reward_shower = Rectangle((width/2,height/2),(width/2,height/2),(0,0,0),"metal_reward.png")
         self.cont1 = Rectangle((width/2.75,height/2.75),(width/2+800,height/2),(0,0,0),"continent1.png")
+        self.cont2 = Rectangle((width/2.75,height/2.75),(width/2+width/1.5,height/2+600),(0,0,0),"continent2.png")
+        self.cont3 = Rectangle((width/2.75,height/2.75),(width/2-1000,height/2-700),(0,0,0),"continent3.png")
+        self.cont4 = Rectangle((width/2.7,height/2.7),(width-width/2.5,height/2-140),(0,0,0),"continent4.png")
         self.tutorial_view = Rectangle((230,100),(120,height-120),(0,0,0),"freeroam_controls.png")
         self.background = Rectangle((width*3,height*3),(width/2,height/2),(0,0,0),"ocean1.png")
         self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
@@ -42,7 +45,10 @@ class game():
 
             if self.boat.get_colliding_with(self.background) == False:
                 self.background.set_position(width/2,height/2)
-                self.cont1.set_position(width/2,height/2)
+                self.cont1.set_position(width/2+800,height/2)
+                self.cont2.set_position(width/2+width/1.5,height/2+600)
+                self.cont3.set_position(width/2-1000,height/2-700)
+                self.cont4.set_position(width-width/2.5,height/2-140)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
@@ -91,10 +97,16 @@ class game():
             movement = ((x+x1)*-1,(y+y1)*-1)
             self.background.change_position(movement[0],movement[1])
             self.cont1.change_position(movement[0],movement[1])
+            self.cont2.change_position(movement[0],movement[1])
+            self.cont3.change_position(movement[0],movement[1])
+            self.cont4.change_position(movement[0],movement[1])
     
             screen.fill((0,0,0))
             self.background.update(screen)
             self.cont1.update(screen)
+            self.cont2.update(screen)
+            self.cont3.update(screen)
+            self.cont4.update(screen)
             self.tutorial_view.update(screen)
             self.boat.update(screen)
             self.water_shower.update(screen)
