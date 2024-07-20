@@ -5,8 +5,8 @@ class game():
     def __init__(self):
         self.score = 0
         self.player_caught = False
-        self.tutorial_view = Rectangle((230,100),(150,height-150),(0,0,0),"freeroam_controls.png")
-        self.background = Rectangle((width*2,height*2),(width/2,height/2),(0,0,0),"ocean1.png")
+        self.tutorial_view = Rectangle((230,100),(120,height-120),(0,0,0),"freeroam_controls.png")
+        self.background = Rectangle((width*3,height*3),(width/2,height/2),(0,0,0),"ocean1.png")
         self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
         self.rot = 0
         self.water_flow = (random.uniform(-0.3,0.3),random.randint(5,360))
