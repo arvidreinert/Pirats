@@ -6,7 +6,7 @@ class game():
         self.score = 0
         self.player_caught = False
         self.tutorial_view = Rectangle((230,100),(150,height-150),(0,0,0),"freeroam_controls.png")
-        self.background = Rectangle((width,height),(width/2,height/2),(0,0,0),"ocean1.png")
+        self.background = Rectangle((width*2,height*2),(width/2,height/2),(0,0,0),"ocean1.png")
         self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
         self.water_shower = Rectangle((100,100),(300,height-150),(0,0,0),"water-floe.png")
         self.rot = 0
@@ -25,7 +25,8 @@ class game():
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                        self.boat_speed = self.boat_speed[0]+0.095,self.boat_speed[1]
+                        if self.boat_speed[0]+0.095 <= 2.5:
+                            self.boat_speed = self.boat_speed[0]+0.095,self.boat_speed[1]
                     if event.key == pygame.K_LEFT:
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]-1
                         self.boat.change_rotation(1)
@@ -33,7 +34,8 @@ class game():
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]+1
                         self.boat.change_rotation(1)
                     if event.key == pygame.K_DOWN:
-                        self.boat_speed = self.boat_speed[0]-0.095,self.boat_speed[1]
+                        if self.boat_speed[0]-0.095 >= -2.5:
+                            self.boat_speed = self.boat_speed[0]-0.095,self.boat_speed[1]
 
             z = self.boat_speed[1]/180*math.pi
             #boat speed[0] = Speed boat speed[1] = rotatiomn
@@ -42,7 +44,7 @@ class game():
             x1= self.water_flow[0]*math.cos(z)
             y1 = self.water_flow[0]*math.sin(z)
             #print(y,y1,x,x1)
-            self.boat.change_position(x+x1,y+y1)
+            self.background.change_position((x+x1)*-1,(y+y1)*-1)
     
             screen.fill((0,0,0))
             self.background.update(screen)
