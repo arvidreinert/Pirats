@@ -9,7 +9,7 @@ class game():
         self.waiting_conttap = False
         self.reward_count = False
         self.player_caught = False
-        self.reward_shower = Rectangle((width/2,height/2),(width/2,height/2),(0,0,0),"apples_reward.png")
+        self.reward_shower = Rectangle((width/2,height/2),(width/2,height/2),(0,0,0),"metal_reward.png")
         self.cont1 = Rectangle((width/2.75,height/2.75),(width/2+800,height/2),(0,0,0),"continent1.png")
         self.tutorial_view = Rectangle((230,100),(120,height-120),(0,0,0),"freeroam_controls.png")
         self.background = Rectangle((width*3,height*3),(width/2,height/2),(0,0,0),"ocean1.png")
@@ -27,6 +27,7 @@ class game():
     def play_game(self):
         self.visited_continents = []
         while self.player_caught == False:
+            clock.tick(30)
             if self.reward_count != False:
                 if self.reward_count >= 1:
                     self.reward_count -= 1
@@ -51,19 +52,20 @@ class game():
                         if play_button.get_point_collide(mous_pos):
                             self.visited_continents.append(self.waiting_conttap)
                             self.waiting_conttap = False
+                            self.reward_count = 60
                             if len(self.inventory) <= 4:
                                 x = random.randint(0,4)
                                 print(x)
                                 if x == 0:
-                                    pass
+                                    self.reward_shower.set_image("metal_reward.png")
                                 elif x == 1:
-                                    pass
+                                    self.reward_shower.set_image("banana_reward.png")
                                 elif x == 2:
-                                    pass
+                                    self.reward_shower.set_image("coconut_reward.png")
                                 elif x == 3:
-                                    pass
+                                    self.reward_shower.set_image("fish_reward.png")
                                 elif x == 4:
-                                    pass 
+                                    self.reward_shower.set_image("trophies reward.png") 
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
@@ -97,7 +99,7 @@ class game():
             self.boat.update(screen)
             self.water_shower.update(screen)
             if self.reward_count != False:
-                self.reward_shower.update()
+                self.reward_shower.update(screen)
             pygame.display.update()
 
 #main menu:
