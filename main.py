@@ -8,9 +8,9 @@ class game():
         self.tutorial_view = Rectangle((230,100),(150,height-150),(0,0,0),"freeroam_controls.png")
         self.background = Rectangle((width*2,height*2),(width/2,height/2),(0,0,0),"ocean1.png")
         self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
-        self.water_shower = Rectangle((100,100),(300,height-150),(0,0,0),"water-floe.png")
         self.rot = 0
         self.water_flow = (random.uniform(-0.3,0.3),random.randint(5,360))
+        self.water_shower = Rectangle((100,100*(self.water_flow[0]+1)),(300,height-150),(0,0,0),"water-floe.png")
         #self.water_shower.set_rotation(self.water_flow[1])
         #-self.boat_speed[1]
         self.boat_speed = (0.1,self.water_flow[1])
@@ -20,21 +20,23 @@ class game():
 
     def play_game(self):
         while self.player_caught == False:
+            if self.boat.get_colliding_with(self.background) == False:
+                self.background.set_position(width/2,height/2)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                        if self.boat_speed[0]+0.095 <= 2.5:
+                        if self.boat_speed[0]+0.095 <= 1:
                             self.boat_speed = self.boat_speed[0]+0.095,self.boat_speed[1]
                     if event.key == pygame.K_LEFT:
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]-1
                         self.boat.change_rotation(1)
                     if event.key == pygame.K_RIGHT:
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]+1
-                        self.boat.change_rotation(1)
+                        self.boat.change_rotation(-1)
                     if event.key == pygame.K_DOWN:
-                        if self.boat_speed[0]-0.095 >= -2.5:
+                        if self.boat_speed[0]-0.095 >= -1:
                             self.boat_speed = self.boat_speed[0]-0.095,self.boat_speed[1]
 
             z = self.boat_speed[1]/180*math.pi
