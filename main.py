@@ -10,7 +10,7 @@ class game():
         self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
         self.water_shower = Rectangle((100,100),(300,height-150),(0,0,0),"water-floe.png")
         self.rot = 0
-        self.water_flow = (random.uniform(-1.5,1.5),random.randint(5,360))
+        self.water_flow = (random.uniform(-0.3,0.3),random.randint(5,360))
         #self.water_shower.set_rotation(self.water_flow[1])
         #-self.boat_speed[1]
         self.boat_speed = (0.1,self.water_flow[1])
@@ -42,7 +42,7 @@ class game():
             x1= self.water_flow[0]*math.cos(z)
             y1 = self.water_flow[0]*math.sin(z)
             #print(y,y1,x,x1)
-            self.boat.change_position(x,y)
+            self.boat.change_position(x+x1,y+y1)
     
             screen.fill((0,0,0))
             self.background.update(screen)
