@@ -41,6 +41,11 @@ class Rectangle():
         else:
             self.original_rect.set_alpha(transparency)
             self.rect.set_alpha(transparency)
+    def set_image(self,image):
+        self.original_image = pygame.image.load(image).convert_alpha()
+        self.original_image = pygame.transform.scale(self.original_image, self.size)
+        self.original_image.set_alpha(self.transparency)
+        self.image = self.original_image.copy()
 
     def set_position(self, xc, yc):
         self.position = (xc, yc)

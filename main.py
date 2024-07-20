@@ -5,7 +5,11 @@ class game():
     def __init__(self):
         self.score = 0
         self.inventory = []
+        self.visited_continents = []
+        self.waiting_conttap = False
+        self.reward_count = False
         self.player_caught = False
+        self.reward_shower = Rectangle((width/2,height/2),(width/2,height/2),(0,0,0),"apples_reward.png")
         self.cont1 = Rectangle((width/2.75,height/2.75),(width/2+800,height/2),(0,0,0),"continent1.png")
         self.tutorial_view = Rectangle((230,100),(120,height-120),(0,0,0),"freeroam_controls.png")
         self.background = Rectangle((width*3,height*3),(width/2,height/2),(0,0,0),"ocean1.png")
@@ -21,17 +25,46 @@ class game():
         self.boat.change_rotation(-self.boat_speed[1])
 
     def play_game(self):
+        self.visited_continents = []
         while self.player_caught == False:
-            if self.boat.get_colliding_with(self.cont1) == True:
-                x = random.randint(0,5)
-                if x == 0:
-                    pass
+            if self.reward_count != False:
+                if self.reward_count >= 1:
+                    self.reward_count -= 1
+                else: 
+                    self.reward_count = False
+            if self.boat.get_colliding_with(self.cont1) == True and "1" not in self.visited_continents:
+                self.tutorial_view.set_image("continent_tutorial.png")
+                self.waiting_conttap = "1"
+            else:
+                self.waiting_conttap = False
+                self.tutorial_view.set_image("freeroam_controls.png")
+
             if self.boat.get_colliding_with(self.background) == False:
                 self.background.set_position(width/2,height/2)
                 self.cont1.set_position(width/2,height/2)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
+
+                if self.waiting_conttap != False:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if play_button.get_point_collide(mous_pos):
+                            self.visited_continents.append(self.waiting_conttap)
+                            self.waiting_conttap = False
+                            if len(self.inventory) <= 4:
+                                x = random.randint(0,4)
+                                print(x)
+                                if x == 0:
+                                    pass
+                                elif x == 1:
+                                    pass
+                                elif x == 2:
+                                    pass
+                                elif x == 3:
+                                    pass
+                                elif x == 4:
+                                    pass 
+
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
                         if self.boat_speed[0]+0.095 <= 1:
@@ -63,6 +96,8 @@ class game():
             self.tutorial_view.update(screen)
             self.boat.update(screen)
             self.water_shower.update(screen)
+            if self.reward_count != False:
+                self.reward_shower.update()
             pygame.display.update()
 
 #main menu:
