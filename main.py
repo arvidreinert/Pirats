@@ -24,17 +24,16 @@ class game():
                 if event.type == pygame.QUIT:
                     sys.exit()
                 if event.type == pygame.KEYDOWN:
-                    print("tap")
                     if event.key == pygame.K_UP:
-                        self.boat_speed = self.boat_speed[0]+0.1,self.boat_speed[1]
+                        self.boat_speed = self.boat_speed[0]+0.095,self.boat_speed[1]
                     if event.key == pygame.K_LEFT:
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]-1
                         self.boat.change_rotation(1)
                     if event.key == pygame.K_RIGHT:
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]+1
-                        self.boat.change_rotation(-1)
+                        self.boat.change_rotation(1)
                     if event.key == pygame.K_DOWN:
-                        self.boat_speed = self.boat_speed[0]-0.1,self.boat_speed[1]
+                        self.boat_speed = self.boat_speed[0]-0.095,self.boat_speed[1]
 
             z = self.boat_speed[1]/180*math.pi
             #boat speed[0] = Speed boat speed[1] = rotatiomn
