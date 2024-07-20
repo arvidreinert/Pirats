@@ -11,7 +11,7 @@ class game():
         self.player_caught = False
         self.reward_shower = Rectangle((width/2,height/2),(width/2,height/2),(0,0,0),"metal_reward.png")
         self.cont1 = Rectangle((width/2.75,height/2.75),(width/2+800,height/2),(0,0,0),"continent1.png")
-        self.cont2 = Rectangle((width/2.75,height/2.75),(width/2+width/1.5,height/2+600),(0,0,0),"continent2.png")
+        self.cont2 = Rectangle((width/2.75,height/2.75),(width/2+2400,height/2+600),(0,0,0),"continent2.png")
         self.cont3 = Rectangle((width/2.75,height/2.75),(width/2-1000,height/2-700),(0,0,0),"continent3.png")
         self.cont4 = Rectangle((width/2.7,height/2.7),(width-width/2.5,height/2-140),(0,0,0),"continent4.png")
         self.tutorial_view = Rectangle((230,100),(120,height-120),(0,0,0),"freeroam_controls.png")
@@ -86,13 +86,16 @@ class game():
                     if event.key == pygame.K_DOWN:
                         if self.boat_speed[0]-0.095 >= -1:
                             self.boat_speed = self.boat_speed[0]-0.095,self.boat_speed[1]
+                    if event.key == pygame.K_SPACE:
+                        self.boat_speed = 0,self.boat_speed[1]
 
             z = self.boat_speed[1]/180*math.pi
+            w = self.water_flow[1]/180*math.pi
             #boat speed[0] = Speed boat speed[1] = rotatiomn
             x = self.boat_speed[0]*math.cos(z)
             y = self.boat_speed[0]*math.sin(z)
-            x1= self.water_flow[0]*math.cos(z)
-            y1 = self.water_flow[0]*math.sin(z)
+            x1= self.water_flow[0]*math.cos(w)
+            y1 = self.water_flow[0]*math.sin(w)
             #print(y,y1,x,x1)
             movement = ((x+x1)*-1,(y+y1)*-1)
             self.background.change_position(movement[0],movement[1])
