@@ -4,7 +4,9 @@ from rectangle import Rectangle
 class game():
     def __init__(self):
         self.score = 0
+        self.inventory = []
         self.player_caught = False
+        self.cont1 = Rectangle((width/2.75,height/2.75),(width/2+800,height/2),(0,0,0),"continent1.png")
         self.tutorial_view = Rectangle((230,100),(120,height-120),(0,0,0),"freeroam_controls.png")
         self.background = Rectangle((width*3,height*3),(width/2,height/2),(0,0,0),"ocean1.png")
         self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
@@ -20,8 +22,13 @@ class game():
 
     def play_game(self):
         while self.player_caught == False:
+            if self.boat.get_colliding_with(self.cont1) == True:
+                x = random.randint(0,5)
+                if x == 0:
+                    pass
             if self.boat.get_colliding_with(self.background) == False:
                 self.background.set_position(width/2,height/2)
+                self.cont1.set_position(width/2,height/2)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
@@ -46,10 +53,13 @@ class game():
             x1= self.water_flow[0]*math.cos(z)
             y1 = self.water_flow[0]*math.sin(z)
             #print(y,y1,x,x1)
-            self.background.change_position((x+x1)*-1,(y+y1)*-1)
+            movement = ((x+x1)*-1,(y+y1)*-1)
+            self.background.change_position(movement[0],movement[1])
+            self.cont1.change_position(movement[0],movement[1])
     
             screen.fill((0,0,0))
             self.background.update(screen)
+            self.cont1.update(screen)
             self.tutorial_view.update(screen)
             self.boat.update(screen)
             self.water_shower.update(screen)
