@@ -142,6 +142,7 @@ class game():
                             elif x == 4:
                                 self.reward_shower.set_image("trophies reward.png") 
                                 self.inventory["trophies"] += 1
+                        
 
             z = self.boat_speed[1]/180*math.pi
             w = self.water_flow[1]/180*math.pi
