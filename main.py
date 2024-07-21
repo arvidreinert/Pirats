@@ -52,6 +52,7 @@ class game():
                         running = "play"
 
             if running == True:
+                screen.fill((0,0,0))
                 background.update(screen)
                 play_button.update(screen)
                 pygame.display.update()
