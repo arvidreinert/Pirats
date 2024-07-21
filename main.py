@@ -66,9 +66,9 @@ class game():
 
             if running == True:
                 screen.fill((0,0,0))
-                leave_button.update(screen)
                 background.update(screen)
                 play_button.update(screen)
+                leave_button.update(screen)
                 pygame.display.update()
 
     def play_game(self):
