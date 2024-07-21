@@ -28,6 +28,7 @@ class game():
         self.boat.change_rotation(-self.boat_speed[1])
 
     def play_game(self):
+        multiplier = 1
         self.visited_continents = []
         while self.player_caught == False:
             clock.tick(30)
@@ -74,19 +75,26 @@ class game():
                                     self.reward_shower.set_image("trophies reward.png") 
 
                 if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RSHIFT:
+                        multiplier += 1
+                    if event.key == pygame.K_LSHIFT:
+                        if multiplier >= 1:
+                            multiplier -= 1
                     if event.key == pygame.K_UP:
                         if self.boat_speed[0]+0.095 <= 5:
                             self.boat_speed = self.boat_speed[0]+0.095,self.boat_speed[1]
                     if event.key == pygame.K_LEFT:
-                        self.boat_speed = self.boat_speed[0],self.boat_speed[1]-1
-                        self.boat.change_rotation(1)
+                        self.boat_speed = self.boat_speed[0],self.boat_speed[1]-1*multiplier
+                        self.boat.change_rotation(1*multiplier)
                     if event.key == pygame.K_RIGHT:
-                        self.boat_speed = self.boat_speed[0],self.boat_speed[1]+1
-                        self.boat.change_rotation(-1)
+                        print(multiplier)
+                        self.boat_speed = self.boat_speed[0],self.boat_speed[1]+1*multiplier
+                        self.boat.change_rotation(-1*multiplier)
                     if event.key == pygame.K_DOWN:
                         if self.boat_speed[0]-0.095 >= -1:
                             self.boat_speed = self.boat_speed[0]-0.095,self.boat_speed[1]
                     if event.key == pygame.K_SPACE:
+                        multiplier = 0
                         self.boat_speed = 0,self.boat_speed[1]
 
             z = self.boat_speed[1]/180*math.pi
