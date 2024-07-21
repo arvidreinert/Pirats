@@ -11,9 +11,9 @@ class game():
         self.player_caught = False
         self.reward_shower = Rectangle((width/2,height/2),(width/2,height/2),(0,0,0),"metal_reward.png")
         self.cont1 = Rectangle((width/2.75,height/2.75),(width/2+800,height/2),(0,0,0),"continent1.png")
-        self.cont2 = Rectangle((width/2.75,height/2.75),(width/2+2400,height/2+600),(0,0,0),"continent2.png")
-        self.cont3 = Rectangle((width/2.75,height/2.75),(width/2-1000,height/2-700),(0,0,0),"continent3.png")
-        self.cont4 = Rectangle((width/2.7,height/2.7),(width-width/2.5,height/2-140),(0,0,0),"continent4.png")
+        self.cont2 = Rectangle((width/2.75,height/2.75),(width/2+2400,height/2+700),(0,0,0),"continent2.png")
+        self.cont3 = Rectangle((width/2.75,height/2.75),(-width/2,-500),(0,0,0),"continent3.png")
+        self.cont4 = Rectangle((width/2.7,height/2.7),(width+500,-250),(0,0,0),"continent4.png")
         self.tutorial_view = Rectangle((230,100),(120,height-120),(0,0,0),"freeroam_controls.png")
         self.background = Rectangle((width*3,height*3),(width/2,height/2),(0,0,0),"ocean1.png")
         self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
@@ -75,7 +75,7 @@ class game():
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP:
-                        if self.boat_speed[0]+0.095 <= 1:
+                        if self.boat_speed[0]+0.095 <= 5:
                             self.boat_speed = self.boat_speed[0]+0.095,self.boat_speed[1]
                     if event.key == pygame.K_LEFT:
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]-1
