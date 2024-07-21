@@ -32,6 +32,7 @@ class game():
         self.visited_continents = []
         while self.player_caught == False:
             clock.tick(30)
+            mous_pos = pygame.mouse.get_pos()
             if self.reward_count != False:
                 if self.reward_count >= 1:
                     self.reward_count -= 1
@@ -60,34 +61,10 @@ class game():
                 self.cont3.set_position(-width/2,-500)
                 self.cont4.set_position(width+500,-250)
             for event in pygame.event.get():
+                #inputs
                 if event.type == pygame.QUIT:
                     sys.exit()
-
-                if self.waiting_conttap != False:
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        if play_button.get_point_collide(mous_pos):
-                            self.visited_continents.append(self.waiting_conttap)
-                            self.waiting_conttap = False
-                            self.reward_count = 60
-                            if len(self.inventory) <= 4:
-                                x = random.randint(0,4)
-                                print(x)
-                                if x == 0:
-                                    self.reward_shower.set_image("metal_reward.png")
-                                    self.inventory["metal"] += 1
-                                elif x == 1:
-                                    self.reward_shower.set_image("banana_reward.png")
-                                    self.inventory["banana"] += 1
-                                elif x == 2:
-                                    self.reward_shower.set_image("coconut_reward.png")
-                                    self.inventory["coconuts"] += 1
-                                elif x == 3:
-                                    self.reward_shower.set_image("fish_reward.png")
-                                    self.inventory["fish"] += 1
-                                elif x == 4:
-                                    self.reward_shower.set_image("trophies reward.png") 
-                                    self.inventory["trophies"] += 1
-
+                #shift in or decrease the stearing 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RSHIFT:
                         multiplier += 1
@@ -109,6 +86,31 @@ class game():
                     if event.key == pygame.K_SPACE:
                         multiplier = 1
                         self.boat_speed = 0,self.boat_speed[1]
+                #managing the tap on the continent
+                if self.waiting_conttap != False:
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if self.cont1.get_point_collide(mous_pos) or self.cont2.get_point_collide(mous_pos) or self.cont3.get_point_collide(mous_pos) or self.cont4.get_point_collide(mous_pos):
+                            self.visited_continents.append(self.waiting_conttap)
+                            self.waiting_conttap = False
+                            self.reward_count = 60
+                            if len(self.inventory) <= 4:
+                                x = random.randint(0,4)
+                                print(x)
+                                if x == 0:
+                                    self.reward_shower.set_image("metal_reward.png")
+                                    self.inventory["metal"] += 1
+                                elif x == 1:
+                                    self.reward_shower.set_image("banana_reward.png")
+                                    self.inventory["banana"] += 1
+                                elif x == 2:
+                                    self.reward_shower.set_image("coconut_reward.png")
+                                    self.inventory["coconuts"] += 1
+                                elif x == 3:
+                                    self.reward_shower.set_image("fish_reward.png")
+                                    self.inventory["fish"] += 1
+                                elif x == 4:
+                                    self.reward_shower.set_image("trophies reward.png") 
+                                    self.inventory["trophies"] += 1
 
             z = self.boat_speed[1]/180*math.pi
             w = self.water_flow[1]/180*math.pi
