@@ -4,7 +4,7 @@ from rectangle import Rectangle
 class game():
     def __init__(self):
         self.score = 0
-        self.inventory = []
+        self.inventory = {"banana":0,"fish":0,"metal":0,"cocnuts":0,"trophies":0}
         self.visited_continents = []
         self.waiting_conttap = False
         self.reward_count = False
@@ -40,6 +40,15 @@ class game():
             if self.boat.get_colliding_with(self.cont1) == True and "1" not in self.visited_continents:
                 self.tutorial_view.set_image("continent_tutorial.png")
                 self.waiting_conttap = "1"
+            elif self.boat.get_colliding_with(self.cont2) == True and "2" not in self.visited_continents:
+                self.tutorial_view.set_image("continent_tutorial.png")
+                self.waiting_conttap = "2"
+            elif self.boat.get_colliding_with(self.cont2) == True and "3" not in self.visited_continents:
+                self.tutorial_view.set_image("continent_tutorial.png")
+                self.waiting_conttap = "3"
+            elif self.boat.get_colliding_with(self.cont2) == True and "4" not in self.visited_continents:
+                self.tutorial_view.set_image("continent_tutorial.png")
+                self.waiting_conttap = "4"
             else:
                 self.waiting_conttap = False
                 self.tutorial_view.set_image("freeroam_controls.png")
@@ -47,9 +56,9 @@ class game():
             if self.boat.get_colliding_with(self.background) == False:
                 self.background.set_position(width/2,height/2)
                 self.cont1.set_position(width/2+800,height/2)
-                self.cont2.set_position(width/2+width/1.5,height/2+600)
-                self.cont3.set_position(width/2-1000,height/2-700)
-                self.cont4.set_position(width-width/2.5,height/2-140)
+                self.cont2.set_position(width/2+2400,height/2+700)
+                self.cont3.set_position(-width/2,-500)
+                self.cont4.set_position(width+500,-250)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
@@ -65,14 +74,19 @@ class game():
                                 print(x)
                                 if x == 0:
                                     self.reward_shower.set_image("metal_reward.png")
+                                    self.inventory["metal"] += 1
                                 elif x == 1:
                                     self.reward_shower.set_image("banana_reward.png")
+                                    self.inventory["banana"] += 1
                                 elif x == 2:
                                     self.reward_shower.set_image("coconut_reward.png")
+                                    self.inventory["coconuts"] += 1
                                 elif x == 3:
                                     self.reward_shower.set_image("fish_reward.png")
+                                    self.inventory["fish"] += 1
                                 elif x == 4:
                                     self.reward_shower.set_image("trophies reward.png") 
+                                    self.inventory["trophies"] += 1
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RSHIFT:
@@ -87,7 +101,6 @@ class game():
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]-1*multiplier
                         self.boat.change_rotation(1*multiplier)
                     if event.key == pygame.K_RIGHT:
-                        print(multiplier)
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]+1*multiplier
                         self.boat.change_rotation(-1*multiplier)
                     if event.key == pygame.K_DOWN:
