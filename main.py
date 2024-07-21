@@ -29,9 +29,12 @@ class game():
         self.water_shower.change_rotation(-90-self.water_flow[1])
         print(self.boat_speed)
         self.boat.change_rotation(-self.boat_speed[1])
+
     def taverne(self):
-        play_button = Rectangle((width/2,height/4),(width/2,height/2),(255,255,255),"play.png")
-        background = Rectangle((width,height),(width/2,height/2),(255,255,255), "sell_stuff_b.png")
+        screen.fill((0,0,0))
+        play_button = Rectangle((width/2,height/4),(width/2,height/2),(255,255,255),"sell_stuff_b.png")
+        leave_button = Rectangle((width/2,height/4),(width/2,height/2+height/4+50),(255,255,255),"leave_button.png")
+        background = Rectangle((width,height),(width/2,height/2),(255,255,255), "tavern.jpg")
         running = True
 
         while running == True:
@@ -70,7 +73,6 @@ class game():
                 else: 
                     self.reward_count = False
             if self.boat.get_colliding_with(self.home_island):
-                print("col")
                 self.tutorial_view.set_image("island_tutorial.png")
                 self.waiting_tavern_tap = True
             if self.boat.get_colliding_with(self.cont1) == True and "1" not in self.visited_continents:
@@ -86,8 +88,9 @@ class game():
                 self.tutorial_view.set_image("continent_tutorial.png")
                 self.waiting_conttap = "4"
             else:
-                self.waiting_conttap = False
-                self.tutorial_view.set_image("freeroam_controls.png")
+                if self.waiting_tavern_tap != True:
+                    self.waiting_conttap = False
+                    self.tutorial_view.set_image("freeroam_controls.png")
 
             if self.boat.get_colliding_with(self.background) == False:
                 self.background.set_position(width/2,height/2)
@@ -126,6 +129,7 @@ class game():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if self.home_island.get_point_collide(mous_pos) and self.waiting_tavern_tap:
                         screen.fill((0,0,0))
+                        self.waiting_tavern_tap = False
                         self.taverne()
                     if self.waiting_conttap != False:
                         if self.cont1.get_point_collide(mous_pos) or self.cont2.get_point_collide(mous_pos) or self.cont3.get_point_collide(mous_pos) or self.cont4.get_point_collide(mous_pos):
