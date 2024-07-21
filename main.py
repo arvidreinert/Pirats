@@ -85,6 +85,8 @@ class game():
             if self.boat.get_colliding_with(self.home_island):
                 self.tutorial_view.set_image("island_tutorial.png")
                 self.waiting_tavern_tap = True
+            else:
+                self.waiting_tavern_tap = False
             if self.boat.get_colliding_with(self.cont1) == True and "1" not in self.visited_continents:
                 self.tutorial_view.set_image("continent_tutorial.png")
                 self.waiting_conttap = "1"
@@ -98,9 +100,14 @@ class game():
                 self.tutorial_view.set_image("continent_tutorial.png")
                 self.waiting_conttap = "4"
             else:
-                if self.waiting_tavern_tap != True:
+                counter = 0
+                for key in self.inventory:
+                    counter += self.inventory[key]
+                if self.waiting_tavern_tap != True and counter == 0:
                     self.waiting_conttap = False
                     self.tutorial_view.set_image("freeroam_controls.png")
+                elif counter >= 1 and self.waiting_tavern_tap != True and self.waiting_conttap != True:
+                    self.tutorial_view.set_image("tutorial_sail_home.png")
 
             if self.boat.get_colliding_with(self.background) == False:
                 self.background.set_position(width/2,height/2)
