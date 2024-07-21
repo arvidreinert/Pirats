@@ -14,6 +14,7 @@ class game():
         self.cont2 = Rectangle((width/2.75,height/2.75),(width/2+2400,height/2+700),(0,0,0),"continent2.png")
         self.cont3 = Rectangle((width/2.75,height/2.75),(-width/2,-500),(0,0,0),"continent3.png")
         self.cont4 = Rectangle((width/2.7,height/2.7),(width+500,-250),(0,0,0),"continent4.png")
+        self.home_island = Rectangle((width/2.6,height/2.6),(-width/2,height/2+800),(0,0,0),"home island.png")
         self.tutorial_view = Rectangle((230,100),(120,height-120),(0,0,0),"freeroam_controls.png")
         self.background = Rectangle((width*3,height*3),(width/2,height/2),(0,0,0),"ocean1.png")
         #thanks to "tree" on png tree for the free boat image link here:https://pngtree.com/tree_4021051?type=1,https://pngtree.com/freepng/pirate-ship-top-down-view_15791217.html 
@@ -61,6 +62,7 @@ class game():
                 self.cont2.set_position(width/2+2400,height/2+700)
                 self.cont3.set_position(-width/2,-500)
                 self.cont4.set_position(width+500,-250)
+                self.home_island.set_position(-width/2,height/2+800)
             for event in pygame.event.get():
                 #inputs
                 if event.type == pygame.QUIT:
@@ -127,12 +129,14 @@ class game():
             self.cont2.change_position(movement[0],movement[1])
             self.cont3.change_position(movement[0],movement[1])
             self.cont4.change_position(movement[0],movement[1])
+            self.home_island.change_position(movement[0],movement[1])
     
             screen.fill((0,0,0))
             self.background.update(screen)
             self.cont1.update(screen)
             self.cont2.update(screen)
             self.cont3.update(screen)
+            self.home_island.update(screen)
             self.cont4.update(screen)
             self.tutorial_view.update(screen)
             self.boat.update(screen)
