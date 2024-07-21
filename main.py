@@ -1,9 +1,13 @@
 from setup import *
 from rectangle import Rectangle
+import time
 #game class:
 class game():
     def __init__(self):
         self.score = 0
+        self.start_time = time.time()
+        self.my_font = pygame.font.SysFont('Rage Italic', 100)
+        self.text_surface = self.my_font.render(str(self.score), False, (0, 0, 0))
         self.inventory = {"banana":0,"fish":0,"metal":0,"coconuts":0,"trophies":0}
         self.visited_continents = []
         self.waiting_tavern_tap = False
@@ -59,6 +63,24 @@ class game():
                         print("click")
                         screen.fill((0,0,0))
                         running = "sell"
+                        for key in self.inventory:
+                            if key == "banana":
+                                self.score += self.inventory[key]*2
+                                self.inventory[key] = 0
+                            elif key == "fish":
+                                self.score += self.inventory[key]*4
+                                self.inventory[key] = 0
+                            elif key == "trophies":
+                                self.score += self.inventory[key]*6
+                                self.inventory[key] = 0
+                            elif key == "coconuts":
+                                self.score += self.inventory[key]*3
+                                self.inventory[key] = 0
+                            elif key == "metal":
+                                self.score += self.inventory[key]*5
+                                self.inventory[key] = 0
+                            self.visited_continents = []
+
                     if leave_button.get_point_collide(mous_pos):
                         print("click")
                         screen.fill((0,0,0))
@@ -197,9 +219,14 @@ class game():
             self.tutorial_view.update(screen)
             self.boat.update(screen)
             self.water_shower.update(screen)
+            self.text_surface = self.my_font.render(f"{str(self.score)}$", False, (0, 0, 0))
+            screen.blit(self.text_surface, (width/2,120))
             if self.reward_count != False:
                 self.reward_shower.update(screen)
             pygame.display.update()
+        end = time.time()
+        self.text_surface = self.my_font.render(f" you played for {self.start_time-end} seconds befor you were caught with {str(self.score)}$ in total!", False, (0, 0, 0))
+        screen.blit(self.text_surface, (width/2,height/2))
 
 #main menu:
 play_button = Rectangle((width/2,height/4),(width/2,height/2),(255,255,255),"play.png")
