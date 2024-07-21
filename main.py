@@ -45,6 +45,11 @@ class game():
             else:
                 play_button.set_transparency(255)
 
+            if leave_button.get_point_collide(mous_pos):
+                leave_button.set_transparency(100)
+            else:
+                leave_button.set_transparency(255)
+
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     sys.exit()
@@ -53,10 +58,15 @@ class game():
                     if play_button.get_point_collide(mous_pos):
                         print("click")
                         screen.fill((0,0,0))
+                        running = "sell"
+                    if leave_button.get_point_collide(mous_pos):
+                        print("click")
+                        screen.fill((0,0,0))
                         running = "play"
 
             if running == True:
                 screen.fill((0,0,0))
+                leave_button.update(screen)
                 background.update(screen)
                 play_button.update(screen)
                 pygame.display.update()
