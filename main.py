@@ -5,6 +5,7 @@ import time
 class game():
     def __init__(self):
         self.score = 0
+        self.enenmies = []
         self.start_time = time.time()
         self.my_font = pygame.font.SysFont('Rage Italic', 100)
         self.text_surface = self.my_font.render(str(self.score), False, (0, 0, 0))
@@ -175,6 +176,11 @@ class game():
                             self.visited_continents.append(self.waiting_conttap)
                             self.waiting_conttap = False
                             self.reward_count = 60
+                            x = Rectangle((150,100),(width/2,height/2),(0,0,0),"boat.png")
+                            x0,y0 = x.get_pos()
+                            x1,y1 = self.boat.get_pos()
+                            x.change_rotation(math.atan2(y1-y0,x1-x0)-(math.pi/2))
+                            self.enenmies.append(x)
                             x = random.randint(0,4)
                             print(x)
                             if x == 0:
