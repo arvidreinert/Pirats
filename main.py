@@ -28,6 +28,33 @@ class game():
         self.water_shower.change_rotation(-90-self.water_flow[1])
         print(self.boat_speed)
         self.boat.change_rotation(-self.boat_speed[1])
+    def taverne(self):
+        play_button = Rectangle((width/2,height/4),(width/2,height/2),(255,255,255),"play.png")
+        background = Rectangle((width,height),(width/2,height/2),(255,255,255), "sell_stuff_b.png")
+        running = True
+
+        while running == True:
+            clock.tick(30)
+            mous_pos = pygame.mouse.get_pos()
+            if play_button.get_point_collide(mous_pos):
+                play_button.set_transparency(100)
+            else:
+                play_button.set_transparency(255)
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
+                #here is the button
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if play_button.get_point_collide(mous_pos):
+                        print("click")
+                        screen.fill((0,0,0))
+                        running = "play"
+
+            if running == True:
+                background.update(screen)
+                play_button.update(screen)
+                pygame.display.update()
 
     def play_game(self):
         multiplier = 1
