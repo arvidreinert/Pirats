@@ -16,7 +16,8 @@ class game():
         self.cont4 = Rectangle((width/2.7,height/2.7),(width+500,-250),(0,0,0),"continent4.png")
         self.tutorial_view = Rectangle((230,100),(120,height-120),(0,0,0),"freeroam_controls.png")
         self.background = Rectangle((width*3,height*3),(width/2,height/2),(0,0,0),"ocean1.png")
-        self.boat = Rectangle((100,100),(width/2,height/2),(0,0,0),"boat.png")
+        #thanks to "tree" on png tree for the free boat image link here:https://pngtree.com/tree_4021051?type=1,https://pngtree.com/freepng/pirate-ship-top-down-view_15791217.html 
+        self.boat = Rectangle((150,100),(width/2,height/2),(0,0,0),"boat.png")
         self.rot = 0
         self.water_flow = (random.uniform(-0.7,0.7),random.randint(5,360))
         self.water_shower = Rectangle((100,100*(self.water_flow[0]+1)),(300,height-150),(0,0,0),"water-floe.png")
