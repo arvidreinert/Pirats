@@ -43,10 +43,10 @@ class game():
             elif self.boat.get_colliding_with(self.cont2) == True and "2" not in self.visited_continents:
                 self.tutorial_view.set_image("continent_tutorial.png")
                 self.waiting_conttap = "2"
-            elif self.boat.get_colliding_with(self.cont2) == True and "3" not in self.visited_continents:
+            elif self.boat.get_colliding_with(self.cont3) == True and "3" not in self.visited_continents:
                 self.tutorial_view.set_image("continent_tutorial.png")
                 self.waiting_conttap = "3"
-            elif self.boat.get_colliding_with(self.cont2) == True and "4" not in self.visited_continents:
+            elif self.boat.get_colliding_with(self.cont4) == True and "4" not in self.visited_continents:
                 self.tutorial_view.set_image("continent_tutorial.png")
                 self.waiting_conttap = "4"
             else:
@@ -92,7 +92,7 @@ class game():
                     if event.key == pygame.K_RSHIFT:
                         multiplier += 1
                     if event.key == pygame.K_LSHIFT:
-                        if multiplier >= 1:
+                        if multiplier >= 2:
                             multiplier -= 1
                     if event.key == pygame.K_UP:
                         if self.boat_speed[0]+0.095 <= 5:
@@ -107,7 +107,7 @@ class game():
                         if self.boat_speed[0]-0.095 >= -1:
                             self.boat_speed = self.boat_speed[0]-0.095,self.boat_speed[1]
                     if event.key == pygame.K_SPACE:
-                        multiplier = 0
+                        multiplier = 1
                         self.boat_speed = 0,self.boat_speed[1]
 
             z = self.boat_speed[1]/180*math.pi
