@@ -5,7 +5,9 @@ import time
 class game():
     def __init__(self):
         self.score = 0
-        self.enenmies = []
+        self.enenmy_counter = 0
+        self.enenmies = {}
+        self.enemy_speed_multiplier = 1
         self.start_time = time.time()
         self.my_font = pygame.font.SysFont('Rage Italic', 100)
         self.text_surface = self.my_font.render(str(self.score), False, (0, 0, 0))
@@ -99,6 +101,18 @@ class game():
         self.visited_continents = []
         while self.player_caught == False:
             clock.tick(30)
+            #enemy movement
+            for enemy in self.enenmies:
+                enemy_moves = self.enenmies[enemy][1]
+                if enemy_moves != []:
+                    self.enenmies[enemy][0].change_position(enemy_moves[0]*self.enemy_speed_multiplier,enemy_moves[1]*self.enemy_speed_multiplier)
+                xdist = self.boat.get_pos()[0]-self.enenmies[enemy][0].get_pos()[0]
+                ydist = self.boat.get_pos()[1]-self.enenmies[enemy][0].get_pos()[1]
+                dist = math.sqrt(xdist*xdist+ydist*ydist)
+                self.enenmies[enemy][1] = [xdist/dist,ydist/dist,]
+                if self.boat.get_colliding_with(self.enenmies[enemy][0]):
+                    self.player_caught = True
+
             mous_pos = pygame.mouse.get_pos()
             if self.reward_count != False:
                 if self.reward_count >= 1:
@@ -176,11 +190,12 @@ class game():
                             self.visited_continents.append(self.waiting_conttap)
                             self.waiting_conttap = False
                             self.reward_count = 60
-                            x = Rectangle((150,100),(width/2,height/2),(0,0,0),"boat.png")
+                            x = Rectangle((150,100),(random.randint(0,round(width)),random.randint(0,round(height/4))),(0,0,0),"boat.png")
                             x0,y0 = x.get_pos()
                             x1,y1 = self.boat.get_pos()
                             x.change_rotation(math.atan2(y1-y0,x1-x0)-(math.pi/2))
-                            self.enenmies.append(x)
+                            self.enenmies[f"enemy{self.enenmy_counter}"] = [x,[0,0]]
+                            self.enenmy_counter += 1
                             x = random.randint(0,4)
                             print(x)
                             if x == 0:
@@ -214,6 +229,8 @@ class game():
             self.cont3.change_position(movement[0],movement[1])
             self.cont4.change_position(movement[0],movement[1])
             self.home_island.change_position(movement[0],movement[1])
+            for enemy in self.enenmies:
+                self.enenmies[enemy][0].change_position(movement[0],movement[1])
     
             screen.fill((0,0,0))
             self.background.update(screen)
@@ -222,6 +239,9 @@ class game():
             self.cont3.update(screen)
             self.home_island.update(screen)
             self.cont4.update(screen)
+            for enemy in self.enenmies:
+                self.enenmies[enemy][0].update(screen)
+
             self.tutorial_view.update(screen)
             self.boat.update(screen)
             self.water_shower.update(screen)
