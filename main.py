@@ -1,6 +1,8 @@
 from setup import *
 from rectangle import Rectangle
 import time
+import playsound
+
 #game class:
 class game():
     def __init__(self):
@@ -100,6 +102,7 @@ class game():
         multiplier = 1
         self.visited_continents = []
         while self.player_caught == False:
+            playsound
             clock.tick(30)
             #enemy movement
             for enemy in self.enenmies:
