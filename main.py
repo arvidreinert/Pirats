@@ -8,7 +8,7 @@ class game():
         self.score = 0
         self.enenmy_counter = 0
         self.enenmies = {}
-        self.enemy_speed_multiplier = 1
+        self.enemy_speed_multiplier = 0.9
         self.start_time = time.time()
         self.my_font = pygame.font.SysFont('Rage Italic', 100)
         self.text_surface = self.my_font.render(str(self.score), False, (0, 0, 0))
@@ -140,18 +140,26 @@ class game():
                 self.waiting_tavern_tap = True
             else:
                 self.waiting_tavern_tap = False
-            if self.boat.get_colliding_with(self.cont1) == True and "1" not in self.visited_continents:
-                self.tutorial_view.set_image("continent_tutorial.png")
-                self.waiting_conttap = "1"
-            elif self.boat.get_colliding_with(self.cont2) == True and "2" not in self.visited_continents:
-                self.tutorial_view.set_image("continent_tutorial.png")
-                self.waiting_conttap = "2"
-            elif self.boat.get_colliding_with(self.cont3) == True and "3" not in self.visited_continents:
-                self.tutorial_view.set_image("continent_tutorial.png")
-                self.waiting_conttap = "3"
-            elif self.boat.get_colliding_with(self.cont4) == True and "4" not in self.visited_continents:
-                self.tutorial_view.set_image("continent_tutorial.png")
-                self.waiting_conttap = "4"
+            if self.boat.get_colliding_with(self.cont1) == True:
+                self.boat_speed = self.boat_speed[0]-0.001,self.boat_speed[1]
+                if "1" not in self.visited_continents:
+                    self.tutorial_view.set_image("continent_tutorial.png")
+                    self.waiting_conttap = "1"
+            elif self.boat.get_colliding_with(self.cont2) == True:
+                self.boat_speed = self.boat_speed[0]-0.001,self.boat_speed[1]
+                if "2" not in self.visited_continents:
+                    self.tutorial_view.set_image("continent_tutorial.png")
+                    self.waiting_conttap = "2"
+            elif self.boat.get_colliding_with(self.cont3) == True:
+                if "3" not in self.visited_continents:
+                    self.tutorial_view.set_image("continent_tutorial.png")
+                    self.waiting_conttap = "3"
+                    self.boat_speed = self.boat_speed[0]-0.001,self.boat_speed[1]
+            elif self.boat.get_colliding_with(self.cont4) == True:
+                self.boat_speed = self.boat_speed[0]-0.001,self.boat_speed[1]
+                if "4" not in self.visited_continents:
+                    self.tutorial_view.set_image("continent_tutorial.png")
+                    self.waiting_conttap = "4"
             else:
                 counter = 0
                 for key in self.inventory:
@@ -212,6 +220,7 @@ class game():
                             x.change_rotation(math.atan2(y1-y0,x1-x0)-(math.pi/2))
                             self.enenmies[f"enemy{self.enenmy_counter}"] = [x,[0,0]]
                             self.enenmy_counter += 1
+                            self.enemy_speed_multiplier += 0.1
                             x = random.randint(0,4)
                             print(x)
                             if x == 0:
