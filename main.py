@@ -179,7 +179,7 @@ class game():
                         if multiplier >= 2:
                             multiplier -= 1
                     if event.key == pygame.K_UP:
-                        if self.boat_speed[0]+0.095 <= 5:
+                        if self.boat_speed[0]+0.095 <= 3.5:
                             self.boat_speed = self.boat_speed[0]+0.095,self.boat_speed[1]
                     if event.key == pygame.K_LEFT:
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]-1*multiplier
@@ -188,7 +188,7 @@ class game():
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]+1*multiplier
                         self.boat.change_rotation(-1*multiplier)
                     if event.key == pygame.K_DOWN:
-                        if self.boat_speed[0]-0.095 >= -1:
+                        if self.boat_speed[0]-0.095 >= -3.5:
                             self.boat_speed = self.boat_speed[0]-0.095,self.boat_speed[1]
                     if event.key == pygame.K_SPACE:
                         multiplier = 1
