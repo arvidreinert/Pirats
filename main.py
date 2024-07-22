@@ -87,6 +87,7 @@ class game():
                                 self.score += self.inventory[key]*5
                                 self.inventory[key] = 0
                             self.visited_continents = []
+                            pygame.mixer.Channel(1).play(pygame.mixer.Sound("wood-door-cl.mp3"))
 
                     if leave_button.get_point_collide(mous_pos):
                         print("click")
@@ -104,8 +105,9 @@ class game():
     def play_game(self):
         multiplier = 1
         self.visited_continents = []
-        pygame.mixer.Channel(0).play(pygame.mixer.Sound("water-strea.mp3"))
-        pygame.mixer.Channel(1).set_volume(2)
+        if pygame.mixer.Channel(0).get_busy == False:
+            pygame.mixer.Channel(0).play(pygame.mixer.Sound("water-strea.mp3"))
+            pygame.mixer.Channel(1).set_volume(2)
         while self.player_caught == False:
             if pygame.mixer.Channel(1).get_busy() == False and len(self.enenmies) >= 1:
                 pygame.mixer.Channel(1).play(pygame.mixer.Sound("battle-ship-111902.mp3"))
@@ -179,7 +181,7 @@ class game():
                         if multiplier >= 2:
                             multiplier -= 1
                     if event.key == pygame.K_UP:
-                        if self.boat_speed[0]+0.095 <= 3.5:
+                        if self.boat_speed[0]+0.095 <= 1.5:
                             self.boat_speed = self.boat_speed[0]+0.095,self.boat_speed[1]
                     if event.key == pygame.K_LEFT:
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]-1*multiplier
@@ -188,7 +190,7 @@ class game():
                         self.boat_speed = self.boat_speed[0],self.boat_speed[1]+1*multiplier
                         self.boat.change_rotation(-1*multiplier)
                     if event.key == pygame.K_DOWN:
-                        if self.boat_speed[0]-0.095 >= -3.5:
+                        if self.boat_speed[0]-0.095 >= -1.5:
                             self.boat_speed = self.boat_speed[0]-0.095,self.boat_speed[1]
                     if event.key == pygame.K_SPACE:
                         multiplier = 1
