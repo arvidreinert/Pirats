@@ -265,12 +265,11 @@ class game():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     print("click")
                     screen.fill((0,0,0))
-                    running = "play"
-                    self.play_game()
+
             screen.fill((255,255,255))
             self.background.update(screen)
             self.my_font = pygame.font.SysFont('Rage Italic', 62)
-            text = f" you played for {round(end-self.start_time,3)} seconds before you were caught with {str(self.score)}$ in total! click to try again"
+            text = f" you played for {round(end-self.start_time,3)} seconds before you were caught with {str(self.score)}$ in total!"
             self.text_surface = self.my_font.render(str(text), False, (50,50,50))
             screen.blit(self.text_surface, (0,height/2))
             pygame.display.update()
@@ -280,53 +279,53 @@ play_button = Rectangle((width/2,height/4),(width/2,height/2-200),(255,255,255),
 cr = Rectangle((width,height),(width/2,height/2),(255,255,255),"credits.png")
 cr_button = Rectangle((width/2,height/4),(width/2,height/2-200+height/4),(255,255,255),"credits_butoon.png")
 background = Rectangle((width,height),(width/2,height/2),(255,255,255), "menu.jpg")
-running = True
+while True:
+    running = True
+    while running == True:
+        clock.tick(30)
+        mous_pos = pygame.mouse.get_pos()
+        if play_button.get_point_collide(mous_pos):
+            play_button.set_transparency(100)
+        else:
+            play_button.set_transparency(255)
 
-while running == True:
-    clock.tick(30)
-    mous_pos = pygame.mouse.get_pos()
-    if play_button.get_point_collide(mous_pos):
-        play_button.set_transparency(100)
-    else:
-        play_button.set_transparency(255)
+        if cr_button.get_point_collide(mous_pos):
+            cr_button.set_transparency(100)
+        else:
+            cr_button.set_transparency(255)
 
-    if cr_button.get_point_collide(mous_pos):
-        cr_button.set_transparency(100)
-    else:
-        cr_button.set_transparency(255)
-
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            sys.exit()
-        #here is the button
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if play_button.get_point_collide(mous_pos):
-                print("click")
-                screen.fill((0,0,0))
-                running = "play"
-            if cr_button.get_point_collide(mous_pos):
-                running = "credits"
-                screen.fill((0,0,0))
-                print(True)
-                r = True
-                while r:
-                    for event in pygame.event.get():
-                        if event.type == pygame.QUIT:
-                            sys.exit()
-                        if event.type == pygame.MOUSEBUTTONDOWN:
-                            r = False
-                            running = True
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            #here is the button
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if play_button.get_point_collide(mous_pos):
+                    print("click")
                     screen.fill((0,0,0))
-                    cr.update(screen)
-                    pygame.display.update()
+                    running = "play"
+                if cr_button.get_point_collide(mous_pos):
+                    running = "credits"
+                    screen.fill((0,0,0))
+                    print(True)
+                    r = True
+                    while r:
+                        for event in pygame.event.get():
+                            if event.type == pygame.QUIT:
+                                sys.exit()
+                            if event.type == pygame.MOUSEBUTTONDOWN:
+                                r = False
+                                running = True
+                        screen.fill((0,0,0))
+                        cr.update(screen)
+                        pygame.display.update()
 
-    if running == True:
-        background.update(screen)
-        cr_button.update(screen)
-        play_button.update(screen)
-        pygame.display.update()
+        if running == True:
+            background.update(screen)
+            cr_button.update(screen)
+            play_button.update(screen)
+            pygame.display.update()
 
-print(running)
-if running == "play":
-    ga = game()
-    ga.play_game()
+    print(running)
+    if running == "play":
+        ga = game()
+        ga.play_game()
