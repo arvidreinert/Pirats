@@ -1,7 +1,6 @@
 from setup import *
 from rectangle import Rectangle
 import time
-import playsound
 
 #game class:
 class game():
@@ -101,8 +100,10 @@ class game():
     def play_game(self):
         multiplier = 1
         self.visited_continents = []
+        pygame.mixer.Channel(0).play(pygame.mixer.Sound("water-strea.mp3"))
         while self.player_caught == False:
-            playsound
+            if pygame.mixer.Channel(1).get_busy() == False and len(self.enenmies) >= 1:
+                pygame.mixer.Channel(1).play(pygame.mixer.Sound("battle-ship-111902.mp3"))
             clock.tick(30)
             #enemy movement
             for enemy in self.enenmies:
