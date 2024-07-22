@@ -5,6 +5,7 @@ import time
 #game class:
 class game():
     def __init__(self):
+        pygame.display.set_caption("CHASE THE SEA")
         self.score = 0
         self.enenmy_counter = 0
         self.enenmies = {}
