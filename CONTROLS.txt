@@ -1,0 +1,8 @@
+CONTROLS:
+Move with the arrow keys rshift to lower the steering sensitivity and Lshift to upper it again. 
+
+Reset throttle and steering sensitivity: Space 
+
+A GAME MADE WITH PYGAME
+
+Special thanks to "tree" on pngtree for the free boat image! Link here: https://pngtree.com/tree_4021051?type=1 and here: https://pngtree.com/freepng/pirate-ship-top-down-view_15791217.html 
