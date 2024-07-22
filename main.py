@@ -236,7 +236,7 @@ class game():
             for enemy in self.enenmies:
                 self.enenmies[enemy][0].change_position(movement[0],movement[1])
     
-            screen.fill((0,0,0))
+            screen.fill((0,130,255))
             self.background.update(screen)
             self.cont1.update(screen)
             self.cont2.update(screen)
@@ -254,9 +254,20 @@ class game():
             if self.reward_count != False:
                 self.reward_shower.update(screen)
             pygame.display.update()
+        running = True
         end = time.time()
-        self.text_surface = self.my_font.render(f" you played for {self.start_time-end} seconds befor you were caught with {str(self.score)}$ in total!", False, (0, 0, 0))
-        screen.blit(self.text_surface, (width/2,height/2))
+        while running:
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                print("click")
+                screen.fill((0,0,0))
+                running = "play"
+                self.play_game()
+            screen.fill((0,0,0))
+            self.text_surface = self.my_font.render(f" you played for {self.start_time-end} seconds befor you were caught with {str(self.score)}$ in total!\n click to try again", False, (0, 0, 0))
+            screen.blit(self.text_surface, (width/2,height/2))
+            pygame.display.update()
 
 #main menu:
 play_button = Rectangle((width/2,height/4),(width/2,height/2),(255,255,255),"play.png")
