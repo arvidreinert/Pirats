@@ -77,6 +77,19 @@ class Rectangle():
             self.rect = pygame.transform.rotate(self.original_rect, self.rotation)
             self.rect_rect = self.rect.get_rect(center=self.position)
 
+    def set_rotation(self,rot):
+        self.rotation = rot
+        if self.image_path is not None:
+            self.image = self.original_image
+            self.image = pygame.transform.rotate(self.original_image, 0)
+            self.image = pygame.transform.rotate(self.original_image, self.rotation)
+            self.image_rect = self.image.get_rect(center=self.position)
+        else:
+            self.rect = self.original_rect
+            self.rect = pygame.transform.rotate(self.original_rect, 0)
+            self.rect = pygame.transform.rotate(self.original_rect, self.rotation)
+            self.rect_rect = self.rect.get_rect(center=self.position)
+            
     def get_pos(self):
         return self.position
 
