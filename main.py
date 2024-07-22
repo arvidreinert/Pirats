@@ -39,6 +39,9 @@ class game():
         self.boat.change_rotation(-self.boat_speed[1])
 
     def taverne(self):
+        pygame.mixer.Channel(1).set_volume(1)
+        pygame.mixer.Channel(1).stop()
+        pygame.mixer.Channel(1).play(pygame.mixer.Sound("door-open.mp3"))
         screen.fill((0,0,0))
         play_button = Rectangle((width/2,height/4),(width/2,height/2),(255,255,255),"sell_stuff_b.png")
         leave_button = Rectangle((width/2,height/4),(width/2,height/2+height/4+50),(255,255,255),"leave_button.png")
@@ -89,6 +92,7 @@ class game():
                         print("click")
                         screen.fill((0,0,0))
                         running = "play"
+                        pygame.mixer.Channel(1).play(pygame.mixer.Sound("wood-door-cl.mp3"))
 
             if running == True:
                 screen.fill((0,0,0))
@@ -101,9 +105,11 @@ class game():
         multiplier = 1
         self.visited_continents = []
         pygame.mixer.Channel(0).play(pygame.mixer.Sound("water-strea.mp3"))
+        pygame.mixer.Channel(1).set_volume(2)
         while self.player_caught == False:
             if pygame.mixer.Channel(1).get_busy() == False and len(self.enenmies) >= 1:
                 pygame.mixer.Channel(1).play(pygame.mixer.Sound("battle-ship-111902.mp3"))
+                pygame.mixer.Channel(1).set_volume(0.075)
             clock.tick(30)
             #enemy movement
             for enemy in self.enenmies:
@@ -275,7 +281,7 @@ class game():
             self.my_font = pygame.font.SysFont('Rage Italic', 62)
             text = f" you played for {round(end-self.start_time,3)} seconds before you were caught with {str(self.score)}$ in total!"
             self.text_surface = self.my_font.render(str(text), False, (50,50,50))
-            screen.blit(self.text_surface, (0,height/2))
+            screen.blit(self.text_surface, (150,height/2))
             pygame.display.update()
 
 #main menu:
