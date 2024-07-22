@@ -106,8 +106,7 @@ class game():
                 x0,y0 = self.enenmies[enemy][0].get_pos()
                 x1,y1 = self.boat.get_pos()
                 x = math.degrees(math.atan2(y1-y0, x1-x0))
-                print(x)
-                self.enenmies[enemy][0].set_rotation(x)
+                self.enenmies[enemy][0].set_rotation(x*-1)
                 enemy_moves = self.enenmies[enemy][1]
                 if enemy_moves != []:
                     self.enenmies[enemy][0].change_position(enemy_moves[0]*self.enemy_speed_multiplier,enemy_moves[1]*self.enemy_speed_multiplier)
