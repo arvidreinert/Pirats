@@ -106,7 +106,7 @@ class game():
         multiplier = 1
         self.visited_continents = []
         while self.player_caught == False:
-            if pygame.mixer.Channel(0).get_busy == False:
+            if pygame.mixer.Channel(0).get_busy() == False:
                 pygame.mixer.Channel(0).play(pygame.mixer.Sound("water-strea.mp3"))
                 pygame.mixer.Channel(1).set_volume(2)
             if pygame.mixer.Channel(1).get_busy() == False and len(self.enenmies) >= 1:
